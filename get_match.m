@@ -1,5 +1,9 @@
 function [output, cost_matrix] =  get_match(im1name, im2name)
 
+%% output is a cell-array containg: {rowsol, cost, v, u, costMat}, output to assignment problem.  
+%% cost_matrix is a matrix of euclidean
+%% distances of the image patches.  Look to lapjv.m for more details.  
+
 binsize = 32;
 nOrients = 4;
 patch_size = 128;
@@ -52,7 +56,12 @@ parfor i = 1:min_props
     
 end
 
+%% cost_matrix is a matrix of euclidean distances between
+%% hog descriptors of the image proposal-patches
 cost_matrix = pdist2(prop_hogs_1, prop_hogs_2);
+
+%% lapjv solves the assignment problem of patches from im1 to patches on im2, with a 
+%% 1-to-1 correspondence
 [rowsol,cost,v,u,costMat] = lapjv(cost_matrix);
 output = {rowsol, cost, v, u, costMat};
 end

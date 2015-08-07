@@ -24,8 +24,8 @@ patch_size = 128;
 params = load('/home/zimo/Documents/JointImageUnderstanding/rp-master/config/rp.mat');
 params = params.params;
 
-im1 = imResample(imread(im1name), [480 480]);
-im2 = imResample(imread(im2name), [480 480]);
+im1 = imread(im1name);
+im2 = imread(im2name);
 
 props_1 = RP(im1, params);
 props_2 = RP(im2, params);

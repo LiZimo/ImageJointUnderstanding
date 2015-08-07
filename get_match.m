@@ -1,8 +1,19 @@
-function [output, cost_matrix] =  get_match(im1name, im2name)
+function [rowsol, cost, cost_matrix, intersection_ratios_im1, intersection_ratios_im2] =  get_match(im1name, im2name)
 
-%% output is a cell-array containg: {rowsol, cost, v, u, costMat}, output to assignment problem.  
-%% cost_matrix is a matrix of euclidean
-%% distances of the image patches.  Look to lapjv.m for more details.  
+%% get_match takes in 2 images, computes potential object patches on the images, and matches the patches across the images
+%% based on hog-similarity.  The function also returns a matrix which details the ratio of intersection
+%% between the bounding boxes of the patches.  
+
+%% INPUTS
+%% 2 image names
+
+
+%% OUTPUTS
+%% rowsol gives for each row the column assigned to it per the assignment problem to minimize cost.  see lapjv.m for more details
+%% cost is the total assignment cost at the end
+%% cost_matrix is an N x N matrix of euclidean distances in hog-space of the image patches across images, where N is the number of patches
+%% intersection_ratios_im1 (and _im2)  are N x N matrices, where (i,j)th entry is the value: area(patch_i intersect patch_j)/area(patch_i).  There is one corresponding
+%% to either image
 
 binsize = 32;
 nOrients = 4;
@@ -18,11 +29,11 @@ im2 = imResample(imread(im2name), [480 480]);
 props_1 = RP(im1, params);
 props_2 = RP(im2, params);
 
-size(props_1)
-size(props_2)
 
 min_props = min(size(props_1,1), size(props_2, 1));
 
+intersection_ratios_im1 = patch_overlaps(props_1(1:min_props,:));
+intersection_ratios_im2 = patch_overlaps(props_2(1:min_props,:));
 
 hog_size = (patch_size/binsize)^2 * 4 * nOrients;
 prop_hogs_1 = zeros(min_props, hog_size );
@@ -63,5 +74,6 @@ cost_matrix = pdist2(prop_hogs_1, prop_hogs_2);
 %% lapjv solves the assignment problem of patches from im1 to patches on im2, with a 
 %% 1-to-1 correspondence
 [rowsol,cost,v,u,costMat] = lapjv(cost_matrix);
-output = {rowsol, cost, v, u, costMat};
+
+
 end

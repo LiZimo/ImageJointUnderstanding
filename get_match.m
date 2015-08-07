@@ -1,4 +1,4 @@
-function [rowsol, cost, cost_matrix, intersection_ratios_im1, patches_1, patches_2] =  get_match(im1name, im2name)
+function [rowsol, cost, cost_matrix, intersection_ratios_im1, intersection_ratios_im2, patches_1, patches_2] =  get_match(im1name, im2name)
 
 %% get_match takes in 2 images, computes potential object patches on the images, and matches the patches across the images
 %% based on hog-similarity.  The function also returns a matrix which details the ratio of intersection

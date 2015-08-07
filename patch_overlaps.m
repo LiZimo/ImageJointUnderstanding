@@ -5,7 +5,7 @@ function overlaps = patch_overlaps(patches)
 
 N = size(patches,1);
 
-%% overlaps is an N x N matrix, where the (i,j)th entry gives: (i intersect j)/(i)
+%% overlaps is an N x N matrix, where the (i,j)th entry gives: (i intersect j)/(i union j)
 overlaps = zeros(N);
 
 
@@ -36,8 +36,9 @@ parfor i = 1:size(patches,1)
         else
            intersection_area = (x6 - x5) * (y6 - y5);
            i_area = (x2 - x1) * (y2 - y1);
+           j_area = (x4 - x3) * (y4 - y3);
            
-           row(j) = intersection_area/i_area;
+           row(j) = intersection_area/(i_area + j_area - intersection_area);
         end
         
         

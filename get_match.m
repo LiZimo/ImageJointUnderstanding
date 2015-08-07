@@ -1,4 +1,4 @@
-function [rowsol, cost, cost_matrix, intersection_ratios_im1, intersection_ratios_im2] =  get_match(im1name, im2name)
+function [rowsol, cost, cost_matrix, intersection_ratios_im1, patches_1, patches_2] =  get_match(im1name, im2name)
 
 %% get_match takes in 2 images, computes potential object patches on the images, and matches the patches across the images
 %% based on hog-similarity.  The function also returns a matrix which details the ratio of intersection
@@ -15,6 +15,7 @@ function [rowsol, cost, cost_matrix, intersection_ratios_im1, intersection_ratio
 %% intersection_ratios_im1 (and _im2)  are N x N matrices, where (i,j)th entry is the value: area(patch_i intersect patch_j)/area(patch_i).  There is one corresponding
 %% to either image
 
+%% finally, patches_1 and patches_2 are the region_proposals to which the assignments and intersection values correspond.  They are both N x 4 matrices
 binsize = 32;
 nOrients = 4;
 patch_size = 128;
@@ -31,6 +32,8 @@ props_2 = RP(im2, params);
 
 
 min_props = min(size(props_1,1), size(props_2, 1));
+patches_1 = props_1(1:min_props,:);
+patches_2 = props_2(1:min_props,:);
 
 intersection_ratios_im1 = patch_overlaps(props_1(1:min_props,:));
 intersection_ratios_im2 = patch_overlaps(props_2(1:min_props,:));

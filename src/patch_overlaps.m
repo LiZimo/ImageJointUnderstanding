@@ -1,5 +1,5 @@
 function overlaps = patch_overlaps(patches)
-
+%panos test
 %% patches are Nx4 arrays, where N is the number of patches.  Each
 %% row contains [xmin ymin xmax ymax] of the patch.  
 

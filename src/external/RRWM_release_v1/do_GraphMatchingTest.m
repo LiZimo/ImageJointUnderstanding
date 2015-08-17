@@ -26,6 +26,7 @@ Time = zeros(length(settings{Con}{4}), length(methods), Set.nTest);
 
 t_start = clock;
 fprintf(['Experiment starts: ' num2str(t_start(4)) ':' num2str(t_start(5)) ':' num2str(round(t_start(6))) '\n']);
+
 for kk = 1:Set.nTest, fprintf('Test: %d of %d ', kk, Set.nTest);
     for i = 1:length(settings{Con}{4})
         eval(['Set.' settings{Con}{3} '=' num2str(settings{Con}{4}(i)) ';']);

@@ -11,7 +11,7 @@ clear all; close all; clc;
 disp('************************ Random Graph Matching Test ************************'); disp(' ');
 
 %% Settings Evaluations
-setPath; setRandomGraph; setMethods;
+setPath; setRandomGraph; setMethods;  
 
 %%
 plotSet.lineWidth = 3; % Line width
@@ -31,7 +31,11 @@ for kk = 1:Set.nTest, fprintf('Test: %d of %d ', kk, Set.nTest);
     for i = 1:length(settings{Con}{4})
         eval(['Set.' settings{Con}{3} '=' num2str(settings{Con}{4}(i)) ';']);
         problem = makeGraphMatchingProblem(Set);
+        
+        
         eval(['Set.' settings{Con}{3} '= settings{' num2str(Con) '}{4};']);
+        
+        
         for j = 1:length(methods)
             [Accuracy(i,j,kk) MatchScore(i,j,kk) Time(i,j,kk)] = wrapper_GM(methods(j), problem);
         end

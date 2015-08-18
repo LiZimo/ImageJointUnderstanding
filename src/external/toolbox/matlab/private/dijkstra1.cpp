@@ -19,6 +19,7 @@
 typedef unsigned short char16_t;
 #endif
 
+#include <typeinfo>
 #include "mex.h"
 #include "fibheap.h"
 #define DIJKSTRA_CPP

@@ -55,8 +55,7 @@ parfor i = 1:min_props
     ymin2 = props_2(i,2);
     xmax2 = props_2(i,3);
     ymax2 = props_2(i,4);
-    
-    
+        
     box1 = imResample(single(im1(ymin1:ymax1, xmin1:xmax1)), [patch_size patch_size])/255;
     H1 = hog(box1, binsize, nOrients);
     H1 = reshape(H1, [hog_size,1]);

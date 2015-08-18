@@ -4,10 +4,10 @@
 * Please email me if you find bugs, or have suggestions or questions!
 * Licensed under the Simplified BSD License [see external/bsd.txt]
 *******************************************************************************/
+#include <typeinfo>
 #include "wrappers.hpp"
 #include "string.h"
 #include <math.h>
-#include <typeinfo>
 #include "sse.hpp"
 typedef unsigned char uchar;
 

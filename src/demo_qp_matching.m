@@ -1,8 +1,8 @@
 %% Load images and off-the-shelf patches.
-im1_name = '.jpg';
-im2_name = '.jpg';
-im1     = imread(im1_name);
-im2     = imread(im2_name);
+im1_name = '../data/aeroplane_left_007.jpg';
+im2_name = '../data/aeroplane_left_008.jpg';
+im1      = imread(im1_name);
+im2      = imread(im2_name);
 
 params = load('external/rp-master/config/rp.mat');  % Default Params for RP method.
 params = params.params;

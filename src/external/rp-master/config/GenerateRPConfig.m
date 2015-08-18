@@ -17,7 +17,7 @@ params.segmentations{1}.colorspace = 'LAB';                         %Colorspace:
 % --> Segmentation parameters:
 params.segmentations{1}.superpixels.sigma = 0.8;
 params.segmentations{1}.superpixels.c = 100;
-params.segmentations{1}.superpixels.min_size = 100;
+params.segmentations{1}.superpixels.min_size = 1000;
 % --> Parameters trained from VOC07:
 %   --> Feature weights:
 params.segmentations{1}.simWeights.wBias = 3.0017;

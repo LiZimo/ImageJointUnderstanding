@@ -1,12 +1,10 @@
 function overlaps = patch_overlaps(patches)
 %% patches are Nx4 arrays, where N is the number of patches.  Each
 %% row contains [xmin ymin xmax ymax] of the patch.  
+%% overlaps is an N x N matrix, where the (i,j)th entry gives: (i intersect j)/(i union j)
 
 N = size(patches,1);
-
-%% overlaps is an N x N matrix, where the (i,j)th entry gives: (i intersect j)/(i union j)
 overlaps = zeros(N);
-
 
 parfor i = 1:size(patches,1)
     

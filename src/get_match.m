@@ -44,8 +44,7 @@ prop_hogs_2 = zeros(min_props, hog_size );
 
 % get subimages for im1 and im2, compute hog on them
 parfor i = 1:min_props
-    
-    
+        
     xmin1 = props_1(i, 1);
     ymin1 = props_1(i,2);
     xmax1 = props_1(i,3);

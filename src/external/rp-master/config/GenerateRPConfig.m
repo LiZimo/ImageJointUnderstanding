@@ -8,7 +8,7 @@
 clear all;
 
 %% Parameter specification:
-params.approxFinalNBoxes = 10000;                                    %Approximate number of proposals
+params.approxFinalNBoxes = 10000;                                   %Approximate number of proposals
 params.rSeedForRun = -1;                                            %Random seed to be used (-1 to generate it with a hashing function)
 params.q = 10;                                                      %Parameter to eliminate near duplicates (raise it to eliminate more duplicates)
 

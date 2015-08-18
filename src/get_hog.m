@@ -25,16 +25,14 @@ parfor i = 1:size(patches,1)
     
     
     xmin1 = patches(i, 1);
-    ymin1 = patches(i,2);
-    xmax1 = patches(i,3);
-    ymax1 = patches(i,4);
+    ymin1 = patches(i, 2);
+    xmax1 = patches(i, 3);
+    ymax1 = patches(i, 4);
    
-    
     box1 = imResample(single(im1(ymin1:ymax1, xmin1:xmax1)), [patch_size patch_size])/255;
     H1 = hog(box1, binsize, nOrients);
     H1 = reshape(H1, [hog_size,1]);
    
-    
     hogs(i,:) = H1;
     
 end

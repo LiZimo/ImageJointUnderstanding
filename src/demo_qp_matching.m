@@ -45,7 +45,7 @@ hog_sims = exp(- (hog_dists).^2 ./ (2*med^2));
 imagesc(hog_sims); colorbar;
 
 %%
-t  = 0;
+t = 0;
 for src_i = 1:ns
     for trg_i = 1:nt
         for src_j = 1:ns
@@ -76,8 +76,17 @@ E12                 = ones(ns, nt);
 A                   = greedyMapping(X, group1, group2);
 
 
+% %% Solve with RRWM
+% tic
+% X                   = RRWM(W, group1, group2);
+% E12                 = ones(ns, nt);
+% [L12(:,1) L12(:,2)] = find(E12);
+% [group1 group2]     = make_group12(L12);
+% A                   = greedyMapping(X, group1, group2);
+% toc
+
 %% Evaluate Matching
-score      = A'*W*A;             % Attained value of objective function.
+score      = A'*W*A             % Attained value of objective function.
 
 [from, to] = find(reshape(A, ns, nt));
 from_overlaps = overlap_with_mask(src_patches(from, :), src_gt);

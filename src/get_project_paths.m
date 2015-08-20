@@ -11,8 +11,8 @@ function [data_path, code_path] = get_project_paths(project_name)
     else
         [~, name] = system('hostname');
     end
-
-    if strcmp(name, 'optasMacPro')
+    
+    if strcmp(name(1:end-1), 'optasMacPro')        
         if strcmp(project_name, 'ImageJointUnderstanding')
             data_path = '/Users/optas/Dropbox/with_others/zimo - peter - panos/Joint_Image_Understanding/Data/';
             code_path = '/Users/optas/Dropbox/matlab_projects/External_Packages/';

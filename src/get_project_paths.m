@@ -1,5 +1,5 @@
 function [data_path, code_path] = get_project_paths(project_name)
-% Computes the personalized file paths for the data and external code libraries assosicated with a specified project.
+% Computes the personalized file paths for the data and external code libraries assosiated with a specific project.
 % Input:
 %           project_name - (str) A string specifying the project's name.
 % Output:   

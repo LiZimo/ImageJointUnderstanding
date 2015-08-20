@@ -13,13 +13,13 @@ function [data_path, code_path] = get_project_paths(project_name)
     end
 
     if strcmp(name, 'optasMacPro')
-        if strcm(project_name, 'ImageJointUnderstanding')
+        if strcmp(project_name, 'ImageJointUnderstanding')
             data_path = '/Users/optas/Dropbox/with_others/zimo - peter - panos/Joint_Image_Understanding/Data/';
             code_path = '/Users/optas/Dropbox/matlab_projects/External_Packages/';
         end
     else
         data_path = 'Zimo add here';
-        code_path =
+        code_path = 'Zimo add here';
     end
     
 end

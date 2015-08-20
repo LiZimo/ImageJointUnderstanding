@@ -1,0 +1,92 @@
+
+*** PRELIMINARY ***
+javaaddpath('./Util/viper/viper-gt.jar')
+docBuilder = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+docBuilder.setNamespaceAware(true);
+parser = viper.api.impl.ViperParser;
+docElement = docBuilder.newDocumentBuilder().parse(ann).getDocumentElement();
+objviper = parser.parseDoc(docElement);
+
+
+
+
+
+
+
+*** NUMBER OF FRAMES IN THE VIDEO ***
+That can be obtained by the following command:
+objviper.getChild(1).getChild(0).getChild(0).getChild(1)
+
+It is often required to ignore videos which have too small number of frames,
+and in that case this should be done before going further.
+
+
+
+
+
+
+
+*** HOW MANY PEOPLE ARE ANNOTATED ***
+One can get the number of children of a node through "getNumberOfChildren"
+
+# annotated person = 
+objviper.getChild(1).getChild(0).getNumberOfChildren() - 1;
+
+if # annotated person is 2 (i.e., if getNumberOfChildren() returns 3), it means that
+objviper.getChild(1).getChild(0).getChild(0) >> FILE INFORMATION (do not need this)
+objviper.getChild(1).getChild(0).getChild(1) >> person 0
+objviper.getChild(1).getChild(0).getChild(2) >> person 1
+
+
+
+
+
+
+*** ANNOTATIONS PER PERSON ***
+
+Let i = 1, ..., objviper.getChild(1).getChild(0).getNumberOfChildren().
+
+objviper.getChild(1).getChild(0).getChild(i).getChild(0): b-boxes
+objviper.getChild(1).getChild(0).getChild(i).getChild(1): t-interval for "basketball"
+objviper.getChild(1).getChild(0).getChild(i).getChild(2): t-interval for "biking"
+objviper.getChild(1).getChild(0).getChild(i).getChild(3): t-interval for "driving"
+objviper.getChild(1).getChild(0).getChild(i).getChild(4): t-interval for "golf_swing"
+objviper.getChild(1).getChild(0).getChild(i).getChild(5): t-interval for "horse_riding"
+objviper.getChild(1).getChild(0).getChild(i).getChild(6): t-interval for "soccor_juggling"
+objviper.getChild(1).getChild(0).getChild(i).getChild(7): t-interval for "swing"
+objviper.getChild(1).getChild(0).getChild(i).getChild(8): t-interval for "tennis_swing"
+objviper.getChild(1).getChild(0).getChild(i).getChild(9): t-interval for "trampoline_jumping"
+objviper.getChild(1).getChild(0).getChild(i).getChild(10): t-interval for "volleyball_spiking"
+objviper.getChild(1).getChild(0).getChild(i).getChild(11): t-interval for "walking"
+
+Or you can use the names of attributes with "getAttribute": 
+- 'Location' for bounding boxes
+- Action names for time intervals
+
+objviper.getChild(1).getChild(0).getChild(i).getAttribute('Location'): b-boxes
+objviper.getChild(1).getChild(0).getChild(i).getAttribute('biking'): t-interval for 'biking'
+
+
+
+IT IS IMPOARTANT THAT THE BOUNDING BOXES ARE NOT ANNOTATED FROM THE FIRST FRAME; 
+each person has own time span which indicates when he appears in the video.
+So it is important to know the tims span, which is given by following command:
+
+objviper.getChild(1).getChild(0).getChild(i).getRange
+
+One may need to use "char" to convert the output as a string that MATLAB can read:
+tspan = char(objviper.getChild(1).getChild(0).getChild(i).getRange);
+
+
+
+
+
+
+
+*** REFERENCES ***
+Refer following websites for more details:
+http://viper-toolkit.sourceforge.net/developers/api/viper/api/impl/DescriptorImpl.html
+
+
+http://viper-toolkit.sourceforge.net/developers/api/viper/api/impl/SourcefileImpl.html
+

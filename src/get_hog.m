@@ -27,7 +27,7 @@ function [F] = get_hog(patches, image, bin_size, n_orients, patch_size)
 
         box1 = imResample(single(image(ymin1:ymax1, xmin1:xmax1)), [patch_size patch_size])/255;
         H1 = hog(box1, bin_size, n_orients);
-        H1 = reshape(H1, [hog_size,1]);
+        H1 = reshape(H1, [hog_size, 1]);
 
         F(i,:) = H1;
 

@@ -4,7 +4,7 @@ classdef Patch < dynamicprops
         % Basic properties that every instance of the Patch class has.        
         source_image    %   (Image)           -    Image over which the patch was sampled.
         
-        corners         %   (1 x 4 matrix)       -    x-y coordinates wrt. source image, corresponding to the corners 
+        corners         %   (1 x 4 matrix)    -    x-y coordinates wrt. source image, corresponding to the corners 
                         %                          of the rectangular patch. They are [xmin, ymin, xmax, ymax]
     end
     
@@ -14,10 +14,10 @@ classdef Patch < dynamicprops
         function obj = Patch(src_img, corners)
             if nargin == 0
                 obj.source_image = [];              %TODO-P replace with Image.
-                obj.xy_cornes    = zeros(1,4);
+                obj.corners      = zeros(1,4);
             else
                 obj.source_image = src_img;
-                obj.corners = corners;
+                obj.corners      = corners;
             end
         end
         
@@ -29,22 +29,23 @@ classdef Patch < dynamicprops
             xmax = obj.corners(3);
             ymax = obj.corners(4);
         end
-          
+    
+        function [F] = plot(obj)
+         % Plots the boundary of the patch on its source image.
+            shape_inserter = vision.ShapeInserter('LineWidth', 4);         
+            [xmin, ymin, xmax, ymax] = obj.get_corners();
+            rectangle = int32([xmin ymin (xmax - xmax) (ymax - ymin)]);
+            im_out    = step(shape_inserter, obj.source_image, rectangle);            
+            image(im_out);
+        end
+
+        
+        
+                  
 %         function left_down_corner ()       % TODO-Z
 %         function left_up_corner ()
 %         function right_down_corner ()
 %         function right_up_corner ()
-    
-        function [F] = plot(obj)
-         % Plots a patch on its source image.
-            [xmin, ymin, xmax, ymax] = obj.get_corners();
-            rec = int32([xmin ymin (xmax - xmax) (ymax - ymix)]);
-            im1_out = step(shapeInserter, obj.source_image, rec);
-
-        end        
-        
-    
-    
     end
    
     methods (Static, Access = private)

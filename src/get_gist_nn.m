@@ -12,7 +12,6 @@ function [gist, Hogs, nearest_neighbors ] = get_gist_nn(foldername)
 
 folder = dir(strcat(foldername, '/', '*.jpg'));
 
-
 images = zeros(512,512,3, length(folder));
 
 for i = 1:length(folder)
@@ -22,7 +21,6 @@ end
 
 
 % GIST Parameters:
-
 param.imageSize = [256 256]; % set a normalized image size
 param.orientationsPerScale = [8 8 8 8]; % number of orientations per scale (from HF to LF)
 param.numberBlocks = 4;

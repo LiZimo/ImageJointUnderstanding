@@ -43,7 +43,7 @@ prop_hogs_1 = zeros(min_props, hog_size );
 prop_hogs_2 = zeros(min_props, hog_size );
 
 % get subimages for im1 and im2, compute hog on them
-parfor i = 1:min_props
+for i = 1:min_props
         
     xmin1 = props_1(i, 1);
     ymin1 = props_1(i,2);

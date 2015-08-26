@@ -6,7 +6,7 @@ function overlaps = patch_overlaps(patches)
 N = size(patches,1);
 overlaps = zeros(N);
 
-parfor i = 1:size(patches,1)
+for i = 1:size(patches,1)
     
     row = zeros(1,N);
     row(i) = 1;
@@ -20,9 +20,8 @@ parfor i = 1:size(patches,1)
         y3 = patches(j,2);
         x4 = patches(j,3);
         y4 = patches(j,4);
-        
-        
-        %% coordinates of intersection are here
+
+        % coordinates of intersection are here
         x5 = max(x1, x3);
         y5 = max(y1, y3);
         x6 = min(x2, x4);

@@ -25,7 +25,6 @@ function visualize_patches(image1, image2, patches1, patches2, assignment_mat, h
     x4 = patches2(matching_patch,3);
     y4 = patches2(matching_patch,4);
 
-
     rec1 = int32([x1 y1 (x2 - x1) (y2 - y1)]);
     rec2 = int32([x3 y3 (x4 - x3) (y4- y3)]);
 

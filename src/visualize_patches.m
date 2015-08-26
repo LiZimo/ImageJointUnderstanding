@@ -5,13 +5,14 @@ function visualize_patches(image1, image2, patches1, patches2, assignment_mat, h
 
     close all;
     shapeInserter = vision.ShapeInserter('LineWidth', 4);
+%     step = video.MultimediaFileReader.step;
 
     for i=1:howmany
 
     close all;
 
-    N = size(patches1,1)
-    which_patch = randi([1 N])
+    N = size(patches1,1);
+    which_patch = randi([1 N]);
     matching_patch = assignment_mat(which_patch);
 
 

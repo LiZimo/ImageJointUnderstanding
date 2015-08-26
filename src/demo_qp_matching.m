@@ -1,8 +1,9 @@
 clr;
-gitdir; cd 'ImageJointUnderstanding/src'
+gitdir; 
+cd 'ImageJointUnderstanding/src'
 
 %% Load images and off-the-shelf patches.
-im1_file= '../data/input/ObjectDiscoveryDataset/Airplane100/0018.jpg';
+im1_file = '../data/input/ObjectDiscoveryDataset/Airplane100/0018.jpg';
 gt1_file = '../data/input/ObjectDiscoveryDataset/Airplane100/GroundTruth/0018.png';
 im2_file = '../data/input/ObjectDiscoveryDataset/Airplane100/0026.jpg';
 gt2_file = '../data/input/ObjectDiscoveryDataset/Airplane100/GroundTruth/0026.png';
@@ -75,7 +76,6 @@ E12                 = ones(ns, nt);
 [group1 group2]     = make_group12(L12);
 A                   = greedyMapping(X, group1, group2);
 
-
 % %% Solve with RRWM
 % tic
 % X                   = RRWM(W, group1, group2);
@@ -86,9 +86,17 @@ A                   = greedyMapping(X, group1, group2);
 % toc
 
 %% Evaluate Matching
-score      = A'*W*A             % Attained value of objective function.
+score           = A' * W * A             % Attained value of objective function.
+[correspondence(:,1), correspondence(:,2)] = find(reshape(A, ns, nt));
 
-[from, to] = find(reshape(A, ns, nt));
+linearInd = sub2ind([ns, nt], correspondence(:,1), correspondence(:,2));
+%%
+% Plot resulting binary matrix
+corresponde_matrix = zeros(ns, nt);
+corresponde_matrix(linearInd ) = 1
+imagesc(corresponde_matrix)
+
+%%
 from_overlaps = overlap_with_mask(src_patches(from, :), src_gt);
 to_overlaps   = overlap_with_mask(trg_patches(to, :), trg_gt);
 sum(abs(from_overlaps - to_overlaps))

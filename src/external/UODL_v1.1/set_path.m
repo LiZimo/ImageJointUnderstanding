@@ -1,4 +1,3 @@
-
 [data_path, code_path] = get_project_paths('ImageJointUnderstanding');
 
 vlf_path   = [code_path 'vlfeat/toolbox/vl_setup'];                            % path to vlfeat

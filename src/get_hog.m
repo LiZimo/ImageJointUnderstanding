@@ -19,7 +19,7 @@ function [F] = get_hog(patches, image, bin_size, n_orients, patch_size)
 
     F = zeros(size(patches,1), hog_size);
 
-    parfor i = 1:size(patches,1) %TODO-P make parfor default wrapper function.
+    for i = 1:size(patches,1) %TODO-P make parfor default wrapper function.
         xmin1 = patches(i, 1);
         ymin1 = patches(i, 2);
         xmax1 = patches(i, 3);

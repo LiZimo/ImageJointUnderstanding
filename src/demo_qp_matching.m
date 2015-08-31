@@ -21,11 +21,6 @@ params = params.params;
 src_patches = RP(src, params);
 trg_patches = RP(trg, params);
 
-%%
-clc
-p1 = Patch(src, src_patches(1,:));
-p1.plot()
-
 %% Extract HOG Feautures and spatial relations between patches.
 bin_size    = 32;  % Hog related parameters.
 n_orients   = 4;
@@ -37,8 +32,6 @@ src_overlaps = patch_overlaps(src_patches);
 trg_hog      = get_hog(trg_patches, trg, bin_size, n_orients, patch_size);
 trg_overlaps = patch_overlaps(trg_patches);
 
-
-%%
 %% Build Affinity matrix which incorporates unary & pairwise patch affinities.
 % 1st attempt, full matrix.
 ns = size(src_patches, 1);

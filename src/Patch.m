@@ -16,8 +16,10 @@ classdef Patch < dynamicprops
                 obj.source_image = [];              %TODO-P replace with Image.
                 obj.corners      = zeros(1,4);
             else
-                obj.source_image = src_img;
+                % TODO-P Add check on corners. e.g., xmin < xmac etc.
+                obj.source_image = src_img;                
                 obj.corners      = corners;
+                
             end
         end
         
@@ -39,17 +41,32 @@ classdef Patch < dynamicprops
             image(im_out);
         end
 
+        function a = area(obj)
+                [xmin, ymin, xmax, ymax] = obj.get_corners();
+                a = (ymax-ymin) * (xmax - xmin);
+        end
         
-        
-                  
+        function area = area_of_intersection(obj, another_patch)
+            
+            [xmin1, ymin1, xmax1, ymax1] = obj.get_corners();
+            [xmin2, ymin2, xmax2, ymax2] = another_patch.get_corners();
+            
+            xmin = max(xmin1, xmin2);
+            ymin = max(ymin1, ymin2);
+            xmax = min(xmax1, xmax2);
+            ymax = min(ymax1, ymax2);
+            
+            area = max(0, (ymax-ymin) * (xmax-xmin));
+        end
+            
+            
+    end
 %         function left_down_corner ()       % TODO-Z
 %         function left_up_corner ()
 %         function right_down_corner ()
 %         function right_up_corner ()
-    end
-   
+    
     methods (Static, Access = private)
     end
     
-
 end

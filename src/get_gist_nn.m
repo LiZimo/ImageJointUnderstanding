@@ -1,68 +1,32 @@
-function [gist, Hogs, nearest_neighbors ] = get_gist_nn(foldername)
+function [gist, nearest_neighbors ] = get_gist_nn(images, k_nearest)
 
-%% given the folder 'foldername', this function computes the GIST descriptor for 
-%% each image in that folder and then finds each images nearest-neighbor in that folder
-
-
+%% given this function computes the GIST descriptor for 
 %% output: gist is a [numImages x GIST_feature_size] matrix
 %% nearest_neighbor is a vector.  nearest_neighbor(i) = j means that the ith image's nearest neighbor is j
 
 
+    % GIST Parameters:
+    param.imageSize = [256 256]; % set a normalized image size
+    param.orientationsPerScale = [8 8 8 8]; % number of orientations per scale (from HF to LF)
+    param.numberBlocks = 4;
+    param.fc_prefilt = 4;
 
+    % Pre-allocate gist:
+    Nimages = size(images,4);
+    Nfeatures = sum(param.orientationsPerScale)*param.numberBlocks^2;
+    gist = zeros([Nimages Nfeatures]);
 
-folder = dir(strcat(foldername, '/', '*.jpg'));
+    % Load first image and compute gist:
+    firstim = images(:,:,:,1);
+    [gist(1, :), param] = LMgist(firstim, '', param); % first call
+    % Loop:
+    for i = 2:Nimages
+       image = images(:,:,:,i);
+       gist(i, :) = LMgist(image, '', param); % the next calls will be faster
+    end
 
-images = zeros(512,512,3, length(folder));
-
-for i = 1:length(folder)
-    img = imresize(imread(strcat(foldername, '/', folder(i).name)), [512 512]);
-    images(:,:,:,i) = img;
-end
-
-
-% GIST Parameters:
-param.imageSize = [256 256]; % set a normalized image size
-param.orientationsPerScale = [8 8 8 8]; % number of orientations per scale (from HF to LF)
-param.numberBlocks = 4;
-param.fc_prefilt = 4;
-
-% Pre-allocate gist:
-Nimages = size(images,4);
-Nfeatures = sum(param.orientationsPerScale)*param.numberBlocks^2;
-gist = zeros([Nimages Nfeatures]);
-
-% Load first image and compute gist:
-firstim = images(:,:,:,1);
-[gist(1, :), param] = LMgist(firstim, '', param); % first call
-% Loop:
-for i = 2:Nimages
-   image = images(:,:,:,i);
-   gist(i, :) = LMgist(image, '', param); % the next calls will be faster
-end
-
-nns = knnsearch(gist, gist, 'k', 2);
-
-nearest_neighbors = nns(:,2);
-
-
-%%%%%%%%%%% Now get Hog features too%%%%%%%%%%%%%%
-bin_size   = 32;
-n_orients  = 4;
-patch_size = 128;
-
-hog_size = (patch_size/bin_size)^2 * 4 * n_orients;
-
-Hogs = zeros(Nimages, hog_size);
-for j = 1:Nimages
-
-H1 = hog(images(:,:,:,i), bin_size, n_orients);
-H1 = reshape(H1, [hog_size,1]);
-
-Hogs(j,:) = H1;
-end
-
-
-
-
+    nns = knnsearch(gist, gist, 'k', k_nearest+1);
+    
+    nearest_neighbors = nns(:, 2:k_nearest+1);
 
 end

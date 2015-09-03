@@ -8,7 +8,7 @@
 clear all;
 
 %% Parameter specification:
-params.approxFinalNBoxes = 100;                                     %Approximate number of proposals  TODO-Z: Is this a good way to restrict patches to ~100?
+params.approxFinalNBoxes = 200;                                     %Approximate number of proposals  TODO-Z: Is this a good way to restrict patches to ~100?
 params.rSeedForRun = -1;                                            %Random seed to be used (-1 to generate it with a hashing function)
 params.q = 10;                                                      %Parameter to eliminate near duplicates (raise it to eliminate more duplicates)
 

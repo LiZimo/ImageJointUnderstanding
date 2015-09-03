@@ -12,16 +12,19 @@ function [gist, nearest_neighbors ] = get_gist_nn(images, k_nearest)
     param.fc_prefilt = 4;
 
     % Pre-allocate gist:
-    Nimages = size(images,4);
+%     Nimages = size(images,4); -- P
+    Nimages = length(images);
     Nfeatures = sum(param.orientationsPerScale)*param.numberBlocks^2;
     gist = zeros([Nimages Nfeatures]);
 
     % Load first image and compute gist:
-    firstim = images(:,:,:,1);
+%     firstim = images(:,:,:,1); -- P
+    firstim = images{1};
     [gist(1, :), param] = LMgist(firstim, '', param); % first call
     % Loop:
     for i = 2:Nimages
-       image = images(:,:,:,i);
+%        image = images(:,:,:,i); -- P
+       image = images{i};
        gist(i, :) = LMgist(image, '', param); % the next calls will be faster
     end
 

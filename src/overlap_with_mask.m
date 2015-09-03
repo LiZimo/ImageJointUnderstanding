@@ -15,7 +15,7 @@ function [overlaps] = overlap_with_mask(patches, bitmask)
 
     
     overlaps = zeros(size(patches,1),1);
-
+    gt_area = sum(bitmask(:));    
     for i = 1:size(patches,1)
         xmin = patches(i,1);
         ymin = patches(i,2);
@@ -23,10 +23,10 @@ function [overlaps] = overlap_with_mask(patches, bitmask)
         ymax = patches(i,4);
         
         if xmin==xmax || ymin==ymax   % Empty patch.   %TODO-Z: change to && and notice. -> degenerate cases of lines exist.
-            overlaps(i) = 0;       
+            overlaps(i) = NaN;       
         else                       
-            gt_patch    = bitmask(ymin:ymax, xmin:xmax); % When referencing the bitmask, the x and y axis, are reversed.                        
-            overlaps(i) = sum(gt_patch(:)) / ((xmax +1 - xmin) * (ymax +1 - ymin));            
+            inter_area  = sum(sum(bitmask(ymin:ymax, xmin:xmax)));            
+            overlaps(i) = inter_area / ((1 + xmax - xmin) * (1 + ymax - ymin) + gt_area - inter_area);            
         end
                
     end

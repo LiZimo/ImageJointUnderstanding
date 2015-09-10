@@ -2,6 +2,6 @@
 *~
 
 # Ignore all files in the data/output directory.
-#data/output/
+data/output/
 
 

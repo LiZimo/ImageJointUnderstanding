@@ -9,7 +9,6 @@ images       = load_images(image_folder, 'jpg');
 gts_folder  = [image_folder 'GroundTruth/'];
 gts         = load_images(gts_folder  , 'png');
 
-
 %% Find gist-nearest neighbors per image.
 k_neighbors = 2;
 [gist_descriptors, gist_nn] = get_gist_nn(images, k_neighbors);

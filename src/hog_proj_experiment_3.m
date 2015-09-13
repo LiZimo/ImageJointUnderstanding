@@ -30,7 +30,7 @@ for i = 1:length(jpegs);
      
      end
     
-    distances = zeros(3,6); %% first row for hog distances, second row for coeff distances
+    distances = zeros(3,6); %% first row for hog distances, second row for coeff distances with zeros, third row for coeff distances with tiling
      
     img1 = imresize(imread(strcat('/home/zimo/Documents/JointImag/VOC2007/VOC2007_6x2/horse_right/',image_name1(1:end-4), '.jpg')),[imgsize NaN]);
     img2 = imresize(imread(strcat('/home/zimo/Documents/JointImag/VOC2007/VOC2007_6x2/horse_right/',image_name2(1:end-4), '.jpg')),[imgsize NaN]);
@@ -54,40 +54,26 @@ for i = 1:length(jpegs);
     hog_img1 = faceFeatures(img1, {'hog'});
     hog_img2 = faceFeatures(img2, {'hog'});
     
-    filename1 = strcat('eigs_horse/',image_name1, '_', '64_', 'basis.mat');
-    filename2 = strcat('eigs_horse/',image_name2, '_', '64_', 'basis.mat');
+    filename1 = strcat('../eigs_horse/',image_name1, '_', '64_', 'basis.mat');
+    filename2 = strcat('../eigs_horse/',image_name2, '_', '64_', 'basis.mat');
     basis1 = load(filename1, 'v');
     basis2 = load(filename2, 'v');
     basis1 = basis1.v;
     basis2 = basis2.v;
     
     hog_patch1 = zeros(size(hog_img1));
-    hog_patch2 = zeros(size(hog_img2));
-    
     hog_patch1(corners1(2):corners1(4), corners1(1):corners1(3),:) = hog_img1(corners1(2):corners1(4), corners1(1):corners1(3),:);
-    hog_patch2(corners2(2):corners2(4), corners2(1):corners2(3),:) = hog_img2(corners2(2):corners2(4), corners2(1):corners2(3),:);
-    hog_patch2_tile = tile_around(hog_patch2, corners2);
     
     vec_hog_patch1 = squeeze(reshape(hog_patch1, 1, [], size(hog_patch1,3)))';   
-    vec_hog_patch2 = squeeze(reshape(hog_patch2, 1, [], size(hog_patch2,3)))';
-    vec_hog_patch2_tile = squeeze(reshape(hog_patch2_tile, 1, [], size(hog_patch2,3)))';
-    
-    
     projec_coeffs1 = vec_hog_patch1 * basis1;
-    projec_coeffs2 = vec_hog_patch2 * basis2;
-    projec_coeffs2_tile = vec_hog_patch2_tile * basis2;
-    
-    projec_distance_gt = norm(projec_coeffs1 - projec_coeffs2);
-    projec_distance_gt_tile = norm(projec_coeffs1 - projec_coeffs2_tile);
-    hog_distance_gt = norm(hog_feats1 - hog_feats2);
-    
-    distances(1,1) = hog_distance_gt;
-    distances(2,1) = projec_distance_gt;
-    distances(3,1) = projec_distance_gt_tile;
-    
-    for k = 2:6
+
+    for k = 1:6
         
-    corners2_rnd_shift = box_shift(corners2, size(img2,1), size(img2,2));
+    if k ~= 1
+        corners2_rnd_shift = box_shift(corners2, size(img2,1), size(img2,2));
+    else
+        corners2_rnd_shift = corners2;
+    end
     if get_area(corners2_rnd_shift) > 0.2 * size(img2,1)*size(img2,2)
         corners2_rnd_shift = get_sub_box(corners2_rnd_shift, 0.2);
     end
@@ -102,7 +88,7 @@ for i = 1:length(jpegs);
     hog_patch2_shift_tile = tile_around(hog_patch2_shift, corners2_rnd_shift);
     
     vec_hog_patch2_shift = squeeze(reshape(hog_patch2_shift, 1, [], size(hog_patch2_shift,3)))';
-    vec_hog_patch2_shift_tile = squeeze(reshape(hog_patch2_shift_tile, 1, [], size(hog_patch2,3)))';
+    vec_hog_patch2_shift_tile = squeeze(reshape(hog_patch2_shift_tile, 1, [], size(hog_patch2_shift_tile,3)))';
     
     projec_coeffs2_shift= vec_hog_patch2_shift * basis2;
     projec_coeffs2_shift_tile = vec_hog_patch2_shift_tile * basis2;

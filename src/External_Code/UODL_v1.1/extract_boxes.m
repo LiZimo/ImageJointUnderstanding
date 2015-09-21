@@ -16,8 +16,16 @@ boxes = struct;
 
 % setup params for randomized prim
 %'config/rp_4segs.mat' to sample from 4 segmentations (slower but higher recall)
-%'config/rp.mat' to sample from 1 segmentations (faster but lower recall)
-params_rp = LoadConfigFile(fullfile(rp_root,'config/rp_100_final_boxes.mat'));
+% config/rp.mat to sample from 1 segmentations (faster but lower recall)
+
+params_rp = LoadConfigFile(fullfile(rp_root, 'config/rp.mat'));
+% or
+% params_rp = LoadConfigFile(fullfile(rp_root,'config/rp_100_final_boxes.mat'));
+% or
+% params_rp.approxFinalNBoxes = 100;    
+
+
+
 
 % loop through images
 for i = 1 : numel(images)

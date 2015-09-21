@@ -1,4 +1,4 @@
-function [laplcn, D_half] = ICS_laplacian_nf(rgbimage, radius,weight_func, sigmax, sigmav)
+function [laplcn, D_half] = ICS_laplacian_nf(rgbimage, radius, weight_func, sigmax, sigmav)
 
 
 if nargin < 2
@@ -38,7 +38,7 @@ parfor i1=1:2*radius + 1
         shift(1 - min(i,0):end-max(i,0),1-min(j,0):end-max(j,0),:,1) = section;
         shift(1 - min(i,0):end-max(i,0),1-min(j,0):end-max(j,0),:,2) = 1;
         
-        weights = -weight_func(image,shift(:,:,:,1),sigmav);
+        weights = - weight_func(image,shift(:,:,:,1), sigmav);
         
         dist=sqrt(i^2 + j^2);
         
@@ -98,3 +98,5 @@ sq_diff = (a-b).^2;
 val = exp(-sum(sq_diff,3)/(2*sigma^2));
 
 end
+
+

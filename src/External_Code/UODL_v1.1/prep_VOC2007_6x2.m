@@ -1,7 +1,7 @@
 % Suha Kwak, Inria-Paris, WILLOW Project
 
 
-% -------------------------------------------------------------------------
+%% -------------------------------------------------------------------------
 % Configurations 
 
 % target classes
@@ -20,11 +20,9 @@ gist_param.orientationsPerScale = [8 8 8 8];
 gist_param.imageSize = [128 128];
 gist_param.numberBlocks = 4;
 gist_param.fc_prefilt = 4;
-nfeat_gist = sum(gist_param.orientationsPerScale)*gist_param.numberBlocks^2;
+nfeat_gist            = sum(gist_param.orientationsPerScale)*gist_param.numberBlocks^2;
 
-
-
-% -------------------------------------------------------------------------
+%% -------------------------------------------------------------------------
 % Set Path 
 
 voc.devkit = fullfile(voc_devkit);
@@ -35,15 +33,18 @@ addpath(genpath(voc.devkit));
 
 % path for results
 voc.dataset = fullfile(db_root, 'VOC2007_6x2');
+
 if isempty(dir(voc.dataset))
 	mkdir(voc.dataset);
 end
 
-
+%%
 % -------------------------------------------------------------------------
 % Indexing Image-List Files 
 
-file_list = dir(fullfile(voc.imglist, '*.imgres'));
+file_list = dir(fullfile(voc.imglist, '*.imgres'))
+
+%%
 file_list = {file_list.name};
 imgset_fnames = cell(nclass, nview);
 
@@ -65,8 +66,7 @@ for cidx = 1 : nclass
 end
 
 
-
-% -------------------------------------------------------------------------
+%% -------------------------------------------------------------------------
 % Prepare Images for Testing
 
 nimg_all = zeros(nview, nclass);

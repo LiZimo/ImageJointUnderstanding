@@ -1,0 +1,20 @@
+This little library computes functional maps using pixel-wise correspondences
+derived from the SIFTflow framework (http://people.csail.mit.edu/celiu/SIFTflow/).  
+
+The main script is titled "SIFTFLOW_Funcmap_Script.m".  
+
+The bases being used for the functional maps are the eigenvectors of the graph-Laplacians
+of the images, computed in the style of "Normalized Cut."  (http://www.cs.berkeley.edu/~malik/papers/SM-ncut.pdf).
+
+In this script, in "Section 2" of the script (it is easy to find, don't worry),
+please designate a directory for images and a directory for Ground_truth segmentations.
+Once provided, the script will pick two images from the directory, compute
+pixel-wise correspondences between them via SIFTflow, and then compute a functional
+map using these correspondences.
+
+The figure at the end will project the gt_segmentation onto the first basis,
+then send it through the functional map, and visualize the transfered function.  
+
+The calculation of the functional-map is detailed within "zimo.pdf."
+
+There are not too many comments, but I hope you will find the code running.

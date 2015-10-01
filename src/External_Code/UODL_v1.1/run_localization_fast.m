@@ -129,12 +129,25 @@ for cidx = 1 : nclass
                 gist_list = cellfun(@(x) x.gist, view_org_list, 'UniformOutput', false);
                 gist_list = cell2mat(gist_list)';
                 gist_dist = pwdist_sq(gist_list, gist_list);
-                gist_dist = gist_dist + diag(ones(cls_nimage, 1) .* inf);
+                
+                
+                if strcmp(cls_name, 'Mixed')
+                    gist_dist = gist_dist + diag(ones(cls_nimage, 1) .* inf);                    
+                    for im_p = 1:length(imageClass_eval)
+                        out_of_class = imageClass_eval(im_p) ~= imageClass_eval;                                               
+                        gist_dist(im_p, out_of_class)  =  +Inf;
+                    end
+                else
+                    gist_dist = gist_dist + diag(ones(cls_nimage, 1) .* inf);
+                end
+                
+                             
                 [sort_dist, sort_order] = sort(gist_dist);
                 NN_list = sort_order(1:num_NN, :);
                 NN_dist = sort_dist(1:num_NN, :);
                 cls_nNN = num_NN;
-
+   
+                
             % all-pair matching: all images except target are source images
             else
                 NN_list = repmat(1:cls_nimage, [cls_nimage, 1])';
@@ -215,7 +228,17 @@ for cidx = 1 : nclass
                     end
                     sim_score_map(:, iidx2) = cell2mat(sim_score_vec);
                 end
+                
+                
                 sim_score_map = sim_score_map + diag(ones(cls_nimage, 1) .* -inf);
+                
+                if strcmp(cls_name, 'Mixed')                    
+                    for im_p = 1:length(imageClass_eval)
+                        out_of_class = imageClass_eval(im_p) ~= imageClass_eval;                                               
+                        sim_score_map(im_p, out_of_class)  =  -Inf;
+                    end
+                end
+                
                 
                 [sort_dist, sort_order] = sort(sim_score_map, 'descend');
                 NN_list = sort_order(1:num_NN, :);

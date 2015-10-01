@@ -6,7 +6,7 @@
 
 % target classes
 % classes = {'aeroplane', 'bicycle', 'boat', 'bus', 'horse', 'motorbike'};
-classes = {'aeroplane'};
+classes = {'bicycle', 'motorbike'}; %, 'horse'};
 nclass  = length(classes);
 
 % target views (object poses)

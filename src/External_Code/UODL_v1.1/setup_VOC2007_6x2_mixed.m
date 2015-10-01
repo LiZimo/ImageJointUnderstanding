@@ -7,14 +7,15 @@ name_experiment = 'VOC2007_6x2';
 % ----------------------------------------------------------------------
 % configuration
 
-root_result = '../results/';
+root_result = './results/';
 if isempty(dir(root_result))
     mkdir(root_result);
 end
 
 % set paths
+set_path;
 conf.path_result  = fullfile(root_result, name_experiment);
-conf.path_dataset = '/local/skwak/Suha/Datasets/VOC2007_6x2/';
+conf.path_dataset = fullfile(db_root, 'VOC2007_6x2');
 conf.postfix_feat = '_seg';
 conf.postfix_gist = '_gist';
 
@@ -23,7 +24,7 @@ if isempty(dir(conf.path_result))
 end
 
 % files containing essential information
-file_lda_bg_hog = './who2/bg11.mat';
+file_lda_bg_hog = './HOG/bg11.mat';
 file_metadata   = 'files.mat';
 
 

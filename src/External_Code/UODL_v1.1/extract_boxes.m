@@ -19,10 +19,11 @@ boxes = struct;
 % config/rp.mat to sample from 1 segmentations (faster but lower recall)
 
 params_rp = LoadConfigFile(fullfile(rp_root, 'config/rp.mat'));
+params_rp.approxFinalNBoxes = 100;    
 % or
 % params_rp = LoadConfigFile(fullfile(rp_root,'config/rp_100_final_boxes.mat'));
 % or
-% params_rp.approxFinalNBoxes = 100;    
+
 
 
 

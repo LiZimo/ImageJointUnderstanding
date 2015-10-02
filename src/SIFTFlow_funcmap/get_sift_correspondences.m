@@ -39,6 +39,9 @@ sift2 = mexDenseSIFT(im2,cellsize,gridspacing);
 
 all_img1_indicators = zeros(imgsize^2, imgsize^2);
 all_img2_indicators = zeros(imgsize^2, imgsize^2);
+
+return
+
 entry = 1;
 
 %% using the flow field, mark indicator matrices

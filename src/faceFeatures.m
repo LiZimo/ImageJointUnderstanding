@@ -9,14 +9,13 @@ function features = faceFeatures(I, featureType)
 %
 % Written by Fan Wang.
 
-    features = [];
-    faceSize = size(I,1);
+    features = [];    
     h = size(I, 1); w = size(I, 2);               
     for i = 1:length(featureType)
         switch featureType{i}
-            case 'sift'
+            case 'sift'                            
                 SIFTparam.grid_spacing = 1; % Distance between grid centers.
-                patch_sizes = [16 12 8];
+                patch_sizes = [8]; %[16 12 8];
                 for k = 1:length(patch_sizes)
                     SIFTparam.patch_size = patch_sizes(k); % Size of patch from which to compute SIFT descriptor (it has to be a factor of 4).
                     padSize = SIFTparam.patch_size/2-1;
@@ -25,13 +24,12 @@ function features = faceFeatures(I, featureType)
                     else
                         gray = I;
                     end
-%                     I1 = [zeros(padSize, 2*padSize + faceSize); [zeros(faceSize, padSize) gray zeros(faceSize,padSize)]; zeros(padSize, 2 * padSize + faceSize)];   % Can we do it on a non-square image?
                     I1 = [zeros(padSize, 2*padSize + w); [zeros(h, padSize) gray zeros(h, padSize)]; zeros(padSize, 2 * padSize + w)];   % Can we do it on a non-square image?                    
                     v  = LMdenseSift(I1, '', SIFTparam);
-                    features = cat(3, features, double(v));                             
+                    features = cat(3, features, double(v));
                 end
             case 'lbp'
-                LBP = efficientLBP(I, [3,3]);
+                LBP      = efficientLBP(I, [3,3]);
                 features = cat(3, features, double(LBP)/255);
             case 'color'
                 features = cat(3, features, double(I)/255);            % TODO-F why devide with 255?

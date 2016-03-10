@@ -18,14 +18,13 @@ set_path;
 % an example. You may need to change only from line 33 to line 60 of the file
 % to write your own setup script.
 prep_VOC2007_6x2;
-
 extract_boxes('VOC2007_6x2');
 extract_gist('VOC2007_6x2');
 
 % Run our object discovery algorithm: 
 % run_localization takes the following arguments: 
 % the name of experiments, # of iterations, # of nearest neighbors
-run_localization_fast('VOC2007_6x2', 5, 10);	% running faster
+run_localization_fast('VOC2007_6x2', 1, 10);	% running faster
 %run_localization_mem('VOC2007_6x2',  5, 10);	% running with less memory
 
 % Result will be saved in the result folder, which is set in "setup_*.m"

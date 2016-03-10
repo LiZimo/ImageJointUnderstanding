@@ -4,7 +4,7 @@
 
 function extract_boxes(name_experiment, modk, modv)
 
-set_path;
+% set_path;
 evalc(['setup_', name_experiment]);
 
 % suha: parameters to filter out small proposals
@@ -19,7 +19,7 @@ boxes = struct;
 % config/rp.mat to sample from 1 segmentations (faster but lower recall)
 
 params_rp = LoadConfigFile(fullfile(rp_root, 'config/rp.mat'));
-params_rp.approxFinalNBoxes = 100;    
+% params_rp.approxFinalNBoxes = 1000;    
 % or
 % params_rp = LoadConfigFile(fullfile(rp_root,'config/rp_100_final_boxes.mat'));
 % or

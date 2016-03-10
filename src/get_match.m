@@ -16,8 +16,8 @@ function [rowsol, cost, cost_matrix, intersection_ratios_im1, intersection_ratio
 %% to either image
 
 %% finally, patches_1 and patches_2 are the region_proposals to which the assignments and intersection values correspond.  They are both N x 4 matrices
-binsize = 32;
-nOrients = 4;
+binsize    = 32;
+nOrients   = 4;
 patch_size = 128;
 
 

@@ -1,6 +1,12 @@
 function [ feat ] = extract_segfeat_hog(img, seg)
 %% extract hog features from segments
 
+if ~isstruct(seg)
+    temp = seg;
+    clear seg;
+    seg.coords = temp;
+end
+    
 % initialize structs
 feat = struct;
 

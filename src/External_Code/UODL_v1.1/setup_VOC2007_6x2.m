@@ -10,7 +10,7 @@ name_experiment = 'VOC2007_6x2';
 root_result = './results/';
 if isempty(dir(root_result))
     mkdir(root_result);
-end
+end 
 
 % set paths
 set_path;

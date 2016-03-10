@@ -89,7 +89,6 @@ A                   = greedyMapping(X, group1, group2);
 %% Evaluate Matching
 score           = A' * W * A             % Attained value of objective function.
 [correspondence(:,1), correspondence(:,2)] = find(reshape(A, ns, nt));
-
 linearInd = sub2ind([ns, nt], correspondence(:,1), correspondence(:,2));
 %%
 % Plot resulting binary matrix
@@ -108,4 +107,3 @@ sum(abs(from_overlaps - to_overlaps))
 %%
 from_overlaps = overlap_with_mask(trg_patches(x_src_trg, :), src_gt)
 sum(abs(from_overlaps - to_overlaps))
-

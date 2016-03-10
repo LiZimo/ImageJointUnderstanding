@@ -6,7 +6,7 @@
 
 % target classes
 % classes = {'aeroplane', 'bicycle', 'boat', 'bus', 'horse', 'motorbike'};
-classes = {'bicycle', 'motorbike'}; %, 'horse'};
+classes = {'bicycle'};
 nclass  = length(classes);
 
 % target views (object poses)
@@ -40,9 +40,9 @@ end
 
 %%
 % -------------------------------------------------------------------------
-% Indexing Image-List Files 
+% Indexing Image-List Files
 
-file_list = dir(fullfile(voc.imglist, '*.imgres'))
+file_list = dir(fullfile(voc.imglist, '*.imgres'));
 
 %%
 file_list = {file_list.name};

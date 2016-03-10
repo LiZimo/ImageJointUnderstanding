@@ -1,4 +1,3 @@
-
 function M = pwdist_sq(X1, X2)
 
 % check dimension
@@ -11,4 +10,4 @@ end
 % calculate pairwise squared Euclidean distance
 M = bsxfun(@plus, sum(X1 .* X1, 1)', (-2) * X1' * X2);        
 M = bsxfun(@plus, sum(X2 .* X2, 1), M);        
-M(M < 0) = 0;                        
+% M(M < 0) = 0;                        

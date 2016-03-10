@@ -4,7 +4,7 @@ function [ standout ] = standout_box( box, confidence )
 box(3,:) = box(3,:)-box(1,:);
 box(4,:) = box(4,:)-box(2,:);
 area = box(3,:).*box(4,:);
-[tmp id_largest] = max(area);
+[~, id_largest] = max(area);
  
 % in order to speed up, ignore candidates with confidence less than a quantile 
 bCand = confidence>quantile(confidence,0.75);
@@ -14,7 +14,8 @@ id_nms = find(bCand);
  
 standout = -inf*ones(1,numel(confidence));
  
-% lar = 0.8;  % for the Object Discovery datasets (mostly large and centered)
+%lar = 0.8;  % for the Object Discovery datasets (mostly large and centered)
+
 lar = 0.5; % for the PASCAL datasets (usual setting)
 inc = 0.8;
 kPart = 5;
@@ -38,12 +39,11 @@ while bCont
         % compute the box-popup score with an additional constraint
         id_valid1 = [ id_valid1 id_largest]; % add the largest box
         if ~isempty(id_valid1) && ~isempty(id_valid2)
-            score = confidence(id_nms(k)) - max(confidence(id_valid1));
-            %score = max(confidence(id_valid2)) - confidence(id_nms(k));
-            %score = max( score - 0.5*max(popup2,0) , 0 );
+            score = confidence(id_nms(k)) - max(confidence(id_valid1));            
             if nnz(confidence(id_valid2) > max(confidence(id_valid1))) >= kPart % an additional constratint
-                %if nnz(confidence(id_valid2) > confidence(id_nms(k))) > 3
-                standout(id_nms(k)) = score;
+                if nnz(confidence(id_valid2) > confidence(id_nms(k))) > 3
+                    standout(id_nms(k)) = score;
+                end
             end
         end
 
@@ -54,7 +54,12 @@ while bCont
        kPart = 0;
     else
        bCont = false;
-    end
+    end       
+end
+
+if nnz(isfinite(standout)) == 0 
+    'fuck'
+    standout = confidence;
 end
     
 

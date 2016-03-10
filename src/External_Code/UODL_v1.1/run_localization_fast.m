@@ -43,7 +43,7 @@ nclass = length(classes);
 
 % for paralalle computing (12 is max)
 if matlabpool('size') == 0
-    matlabpool open 8
+    matlabpool open 7
 end
 
 hsfilter = fspecial3('gaussian', [5 5 5]);
@@ -281,7 +281,7 @@ for cidx = 1 : nclass
 
                 % Hough matching
                 confidenceMap = houghmatching_seg( vA, viewB, hsfilter );
-                confidenceB = max(confidenceMap,[],1);      % max pooling
+                confidenceB   = max(confidenceMap,[],1);      % max pooling
 
                 % store results
                 confidenceM_list{pidx} = confidenceMap;

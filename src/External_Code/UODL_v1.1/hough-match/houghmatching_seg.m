@@ -13,7 +13,7 @@ end
 tic;
 %% learning HT
 % compute inverted frames and determinants
-[ invframe detA ]  = inv_frame(viewA.frame);
+[ invframe, detA ]  = inv_frame(viewA.frame);
 % project the points on the standard frame
 ptRef = viewA.bbox(3:4);% bottom right point
 % ptRef = [ viewA.imsize(1) viewA.imsize(2) ];% bottom right point
@@ -44,6 +44,9 @@ sbinv = linspace(-4,4,dimBin(3)+1); % log_2 scale
 % compute full sim matrix
 wVoteFull = viewA.desc'*[ viewB.desc; ones(1,size(viewB.desc,2)) ];
 wVoteFull = max(wVoteFull, 0);   
+
+% confidenceMap = wVoteFull;
+% return
 
 tableBina = zeros(size(viewA.frame,2),size(viewB.frame,2),'uint32'); 
 
